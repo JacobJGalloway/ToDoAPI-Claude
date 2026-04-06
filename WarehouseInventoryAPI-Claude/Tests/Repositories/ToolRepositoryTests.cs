@@ -1,3 +1,5 @@
+using Xunit;
+using Moq;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using WarehouseInventory_Claude.Data;
