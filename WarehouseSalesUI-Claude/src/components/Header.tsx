@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 import { UserCircle } from 'lucide-react'
 import iconLight from '../assets/Digital Parts Icon Light Mode.svg'
@@ -24,7 +25,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         <picture>
           <source media="(prefers-color-scheme: dark)" srcSet={iconDark} />
           <img src={iconLight} alt="Digital Parts icon" className={styles.icon} />
@@ -33,7 +34,7 @@ export default function Header() {
           <source media="(prefers-color-scheme: dark)" srcSet={nameDark} />
           <img src={nameLight} alt="Digital Parts" className={styles.name} />
         </picture>
-      </div>
+      </Link>
 
       <div className={styles.profileWrapper} ref={wrapperRef}>
         <button

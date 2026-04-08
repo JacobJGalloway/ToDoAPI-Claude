@@ -3,8 +3,18 @@
   align-items: stretch;
   padding: 0 16px;
   background: var(--bg);
-  border-bottom: 2px solid var(--text-h);
   box-sizing: border-box;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--text-h);
+  }
 }
 
 .link {
@@ -16,7 +26,8 @@
   color: var(--text);
   text-decoration: none;
   border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
+  position: relative;
+  z-index: 1;
   transition: color 0.15s;
 
   &:hover {
