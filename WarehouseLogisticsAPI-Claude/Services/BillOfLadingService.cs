@@ -58,6 +58,47 @@ namespace WarehouseLogistics_Claude.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<BillOfLading>> GetAllAsync()
+            => await _unitOfWork.BillsOfLading.GetAllAsync();
+
+        public async Task<BillOfLading?> GetByTransactionIdAsync(string transactionId)
+        {
+            var bol = await _unitOfWork.BillsOfLading.GetByTransactionIdAsync(transactionId);
+            if (bol is null) return null;
+            bol.LineEntries = await _unitOfWork.LineEntries.GetLineEntriesByTransactionIdAsync(transactionId);
+            return bol;
+        }
+
+        public async Task<List<LineEntry>> GetLineEntriesByTransactionIdAsync(string transactionId)
+            => await _unitOfWork.LineEntries.GetLineEntriesByTransactionIdAsync(transactionId);
+
+        public async Task ReplaceLocationStopAsync(string transactionId, string oldLocationId, string newLocationId)
+        {
+            var allEntries = await _unitOfWork.LineEntries.GetLineEntriesByTransactionIdAsync(transactionId);
+            var oldEntries = allEntries.Where(le => le.LocationId == oldLocationId).ToList();
+
+            if (oldEntries.Count == 0)
+                throw new ArgumentException($"No line entries found for location {oldLocationId} on transaction {transactionId}.");
+
+            if (oldEntries.Any(le => le.IsProcessed))
+                throw new InvalidOperationException($"Location {oldLocationId} has already been processed and cannot be replaced.");
+
+            foreach (var entry in oldEntries)
+            {
+                var newEntry = new LineEntry
+                {
+                    TransactionId = transactionId,
+                    LocationId    = newLocationId,
+                    SKUMarker     = entry.SKUMarker,
+                    Quantity      = entry.Quantity,
+                };
+                await _unitOfWork.LineEntries.AddAsync(newEntry);
+            }
+
+            await _unitOfWork.LineEntries.DeleteByLocationAsync(transactionId, oldLocationId);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         private async Task PersistLineEntriesAsync(string transactionId, List<LineEntry> lineEntries)
         {
             foreach (var lineEntry in lineEntries)

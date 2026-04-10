@@ -1,0 +1,46 @@
+.page {
+  composes: page from '../styles/base.module.css';
+}
+
+.table {
+  composes: table from '../styles/base.module.css';
+}
+
+.th {
+  composes: th from '../styles/base.module.css';
+}
+
+.td {
+  composes: td from '../styles/base.module.css';
+}
+
+.tdCenter {
+  composes: td;
+  text-align: center;
+}
+
+.viewBtn {
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+}
+
+.overlay {
+  composes: overlay from '../styles/base.module.css';
+}
+
+.modal {
+  composes: modal from '../styles/base.module.css';
+  min-width: 560px;
+}
+
+.closeBtn {
+  composes: closeBtn from '../styles/base.module.css';
+}
+
+.modalTitle {
+  composes: modalTitle from '../styles/base.module.css';
+}
+
+.modalFooter {
+  composes: modalFooter from '../styles/base.module.css';
+}

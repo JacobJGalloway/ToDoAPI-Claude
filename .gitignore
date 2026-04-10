@@ -1,0 +1,32 @@
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# Environment-specific appsettings (may contain secrets)
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Local.json
+
+# .NET user secrets
+secrets.json
+
+# Node / Vite
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+
+# SQLite read replicas (generated on startup)
+*Read.db3
+*Read.db3-shm
+*Read.db3-wal
+
+# OS
+.DS_Store
+Thumbs.db

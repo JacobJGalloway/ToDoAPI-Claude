@@ -1,0 +1,96 @@
+.page {
+  composes: page from '../styles/base.module.css';
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.table {
+  composes: table from '../styles/base.module.css';
+}
+
+.th {
+  composes: th from '../styles/base.module.css';
+}
+
+.td {
+  composes: td from '../styles/base.module.css';
+}
+
+.tdMuted {
+  composes: td;
+  opacity: 0.45;
+}
+
+.tdCenter {
+  composes: td;
+  text-align: center;
+}
+
+.tdCenterMuted {
+  composes: tdCenter;
+  opacity: 0.45;
+}
+
+.deactivateBtn {
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+}
+
+.overlay {
+  composes: overlay from '../styles/base.module.css';
+}
+
+.modal {
+  composes: modal from '../styles/base.module.css';
+  min-width: 420px;
+}
+
+.closeBtn {
+  composes: closeBtn from '../styles/base.module.css';
+}
+
+.modalTitle {
+  composes: modalTitle from '../styles/base.module.css';
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.formField label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.formField input,
+.formField select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text-h);
+  font-size: 0.9rem;
+}
+
+.modalFooter {
+  composes: modalFooter from '../styles/base.module.css';
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}

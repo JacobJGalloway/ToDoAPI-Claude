@@ -12,7 +12,9 @@ namespace WarehouseLogistics_Claude.Controllers
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
+        /// <summary>Returns all stores.</summary>
         [HttpGet]
+        [Authorize(Policy = "ReadBOL")]
         public async Task<ActionResult<IEnumerable<Store>>> GetAllAsync()
         {
             return Ok(await _unitOfWork.Stores.GetAllAsync());
