@@ -9,9 +9,12 @@ Switchyard is an inventory, driver, and equipment tracking and management system
 | `Switchyard.InventoryAPI` | Inventory API — Clothing, PPE, Tools | 7000 |
 | `Switchyard.LogisticsAPI` | Logistics API — Bills of Lading, Stores, Warehouses, Users | 7001 |
 | `Switchyard.UI` | React/TypeScript client UI | 5173 |
+| `Switchyard-Go` | Go backend — PlanBOL, Dispatch Whiteboard, HOS, Equipment | 8080 |
 
 **Shared database:** `Sqlite 3 Implementation/WarehouseData.db3`
 **Read replica:** `Sqlite 3 Implementation/WarehouseRead.db3` (auto-created on startup if not already persisted)
+
+**Design documentation:** [`ARCHITECTURE.md`](ARCHITECTURE.md) — full v1.1 architectural design (Go backend scope, business rules, data model, deployment).
 
 ## Running the System
 
@@ -113,14 +116,28 @@ Both APIs use Auth0 JWT bearer authentication. Permissions are claim-based:
 
 ## Wanted Features
 
-- [ ] Analytics endpoints — inventory over time by location (leverage `UnloadedDate` + projected flag)
-- [ ] Shipping figures per warehouse — aggregate from processed BOL line entries
-- [ ] Inventory withdrawal UI — `Switchyard.UI` currently shows Inventory Viewer; withdrawal flow not yet built
-- [ ] BOL status history — audit trail of status transitions
-- [ ] Read replica health endpoint — expose sync lag / InSync status
+### v1.1 — In Progress
+- [ ] Digital Dispatch Whiteboard — real-time Kanban board replacing the physical whiteboard; tracks drivers, equipment, and BOLs through their full lifecycle
+- [ ] PlanBOL route planning and constraint resolution — inventory-safe stop sequencing before BOL commitment
+- [ ] Driver entity, HOS tracking, and run sheet generation
+- [ ] Equipment management (truck/tractor) — scheduled maintenance and breakdown states
+- [ ] Dead-head BOL pairing — 4-hour pre-arrangement window enforcement
+- [ ] Driver-BOL-equipment assignment record
+- [ ] Delivery confirmation per store stop and internal store invoice output
+- [ ] Email notifications — HOS warnings, dead-head timer expiry, breakdown alerts, workflow completion
+- [ ] BOL status history (planning phase) — status transitions on PlanBOLRecord; pairs with future .NET audit trail
+- [ ] Rolling refresh tokens for Auth0 sessions in place of fixed-expiry client secrets
+
+### v1.2 — June
+- [ ] Operating cost tracking — base rate per mile; roadside tow rates applied to resolved breakdown records
+- [ ] Analytics and reporting — revenue vs. profit per BOL, driver, and warehouse; built on data captured in v1.1
+- [ ] Returns — `return_depot` stop type on PlanBOLStop; constraint solver already accommodates the extension
+- [ ] White-label theming — "Industrial Cool" light and dark defaults; client DNS-scoped SCSS variable overrides
+- [ ] Switchyard brand assets — logo, name, combined lockup, and "Powered by Switchyard" treatment (Light and Dark variants)
+- [ ] Extract `Data/` folders to a shared class library — domain models separated from API projects
+
+### Backlog
+- [ ] Read replica health endpoint — expose sync lag and InSync status
 - [ ] Migrate from `EnsureCreated` to EF Core migrations for controlled schema evolution
 - [ ] Extract User Management to a dedicated identity service when the data layer splits
-- [ ] Sales UI for system-registered non-employee users (no assigned location, no role) — separate main menu surfacing inventory by type, plus a checkout workflow that reduces inventory quantities via line entries on a customer-facing BOL variant
 - [ ] Scalar branding — Switchyard logo and name above the API title; currently blocked by Scalar's limited logo support in the .NET package
-- [ ] Extract `Data/` folders into a dedicated class library project — starting with domain models to prevent hidden complexity under the data layer
-- [ ] Implement rolling refresh tokens for Auth0 sessions in place of fixed-expiry client secrets

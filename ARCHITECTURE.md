@@ -665,7 +665,7 @@ requires one additional M2M — confirm free tier allows this before implementat
 
 Frontend (shared across all backend islands):
                     ┌──────────────────────┐
-                    │   WarehouseSalesUI    │
+                    │    Switchyard.UI      │
                     │  (existing React/TS)  │
                     │   Static host / CDN   │
                     └──────────────────────┘
